@@ -83,6 +83,7 @@ const AchievementCard = ({ achievement, index }) => {
     >
       <div className="flex-1 md:w-1/2"></div>
       
+      {/* Timeline dot with animated pulse */}
       <motion.div 
         initial="hidden"
         animate={cardInView ? "visible" : "hidden"}
@@ -94,6 +95,7 @@ const AchievementCard = ({ achievement, index }) => {
           border-4 border-black relative`}>
           {achievement.icon}
           
+          {/* Animated pulse effect */}
           <span className="absolute top-0 left-0 w-full h-full rounded-full 
             bg-gradient-to-br animate-ping opacity-20 duration-1000"></span>
         </div>
@@ -108,11 +110,14 @@ const AchievementCard = ({ achievement, index }) => {
         <div className={`bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-xl shadow-2xl 
           p-6 md:p-8 border border-zinc-800 transform transition-all duration-500 
           backdrop-blur-sm hover:border-red-500 group
-          ${isEven ? 'md:ml-10' : 'md:mr-10'}`}>
+          ${isEven ? 'md:ml-10' : 'md:mr-10'}`}
+          >
           
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b 
             from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 
-            transition-opacity duration-700 rounded-xl pointer-events-none"></div>
+            transition-opacity duration-700 rounded-xl pointer-events-none
+            'md:ml-10'  md:ml-10
+            "></div>
           
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
@@ -180,6 +185,7 @@ export default function Achievements() {
         </motion.div>
         
         <div className="relative" ref={containerRef}>
+          {/* Vertical timeline line with animation */}
           <motion.div 
             initial={{ height: 0 }}
             animate={isInView ? { height: "100%" } : { height: 0 }}
