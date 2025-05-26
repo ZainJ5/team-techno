@@ -10,7 +10,7 @@ export default function Navbar() {
     { name: 'Expertise', id: 'expertise' },
     { name: 'Achievements', id: 'achievements' },
     { name: 'Team', id: 'team' },
-    { name: 'Team Gallery', id: 'gallery' },
+    { name: 'Team Gallery', id: 'team-gallery' },
     { name: 'Contact', id: 'contact' },
   ];
 
