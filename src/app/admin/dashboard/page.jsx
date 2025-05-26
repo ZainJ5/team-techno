@@ -76,6 +76,7 @@ export default function AdminDashboard() {
         return;
       }
       
+      // Validate file type
       if (!file.type.startsWith('image/')) {
         setSubmitMessage({
           type: 'error',
@@ -97,6 +98,7 @@ export default function AdminDashboard() {
   const uploadImage = async () => {
     if (!selectedImage) return null;
     
+    // Check if environment variables are set
     if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
       console.error('Cloudinary cloud name not configured');
       setSubmitMessage({
@@ -122,7 +124,7 @@ export default function AdminDashboard() {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-          timeout: 30000, 
+          timeout: 30000, // 30 second timeout
         }
       );
       
