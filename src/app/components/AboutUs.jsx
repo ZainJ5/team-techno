@@ -103,7 +103,7 @@ export default function AboutUs() {
                 <div className="absolute inset-0 rounded-2xl border border-red-500/20 group-hover:border-red-500/40 transition-colors duration-500"></div>
                 
                 <Image 
-                  src="/team-photo.jpg" 
+                  src="/aboutus.jpg" 
                   alt="Team Techno - Our Amazing Team" 
                   fill 
                   className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
