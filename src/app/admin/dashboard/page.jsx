@@ -95,69 +95,80 @@ export default function AdminDashboard() {
     }
   };
   
-  const uploadImage = async () => {
-    if (!selectedImage) return null;
+  // Replace the current uploadImage function with this improved version
+const uploadImage = async () => {
+  if (!selectedImage) return null;
+  
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'team_members';
+  
+  if (!cloudName) {
+    console.error('Cloudinary cloud name not configured');
+    setSubmitMessage({
+      type: 'error',
+      text: 'Image upload configuration missing. Please check .env.local file.'
+    });
+    return null;
+  }
+  
+  const formDataForUpload = new FormData();
+  formDataForUpload.append('file', selectedImage);
+  formDataForUpload.append('upload_preset', uploadPreset);
+  
+  setUploading(true);
+  
+  try {
+    console.log('Uploading to Cloudinary:', `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
+    console.log('Upload preset being used:', uploadPreset);
     
-    // Check if environment variables are set
-    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
-      console.error('Cloudinary cloud name not configured');
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      formDataForUpload,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        timeout: 60000,
+      }
+    );
+    
+    setUploading(false);
+    console.log('Upload successful:', response.data);
+    return response.data.secure_url;
+  } catch (error) {
+    console.error('Error uploading image to Cloudinary:', error);
+    console.error('Error details:', error.response?.data);
+    setUploading(false);
+    
+    if (error.response?.data?.error) {
       setSubmitMessage({
         type: 'error',
-        text: 'Image upload configuration missing. Please contact administrator.'
+        text: `Upload failed: ${error.response.data.error.message}`
       });
-      return null;
+    } else if (error.response?.status === 401) {
+      setSubmitMessage({
+        type: 'error',
+        text: 'Image upload failed: Invalid upload preset or unauthorized.'
+      });
+    } else if (error.response?.status === 400) {
+      setSubmitMessage({
+        type: 'error',
+        text: 'Image upload failed: Invalid file or configuration. Check console for details.'
+      });
+    } else if (error.code === 'ECONNABORTED') {
+      setSubmitMessage({
+        type: 'error',
+        text: 'Image upload timed out. Please try with a smaller image.'
+      });
+    } else {
+      setSubmitMessage({
+        type: 'error',
+        text: `Failed to upload image: ${error.message}`
+      });
     }
-    
-    const formDataForUpload = new FormData();
-    formDataForUpload.append('file', selectedImage);
-    formDataForUpload.append('upload_preset', 'team_members');
-    
-    setUploading(true);
-    
-    try {
-      console.log('Uploading to:', `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`);
-      
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        formDataForUpload,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          timeout: 30000, // 30 second timeout
-        }
-      );
-      
-      setUploading(false);
-      return response.data.secure_url;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      setUploading(false);
-      
-      if (error.response?.status === 401) {
-        setSubmitMessage({
-          type: 'error',
-          text: 'Image upload failed: Invalid upload preset or unauthorized. Please contact administrator.'
-        });
-      } else if (error.response?.status === 400) {
-        setSubmitMessage({
-          type: 'error',
-          text: 'Image upload failed: Invalid file or configuration.'
-        });
-      } else if (error.code === 'ECONNABORTED') {
-        setSubmitMessage({
-          type: 'error',
-          text: 'Image upload timed out. Please try again.'
-        });
-      } else {
-        setSubmitMessage({
-          type: 'error',
-          text: `Failed to upload image: ${error.response?.data?.error?.message || error.message}`
-        });
-      }
-      return null;
-    }
-  };
+    return null;
+  }
+};
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -195,7 +206,7 @@ export default function AdminDashboard() {
         ...(formData.memberType !== 'ec' && { ecTitle: undefined })
       };
       
-      await axios.post('/api/members', memberData);
+      await axios.post('/api/member', memberData);
       
       setSubmitMessage({ 
         type: 'success', 
@@ -228,7 +239,7 @@ export default function AdminDashboard() {
   const handleDelete = async (memberId) => {
     if (window.confirm('Are you sure you want to delete this member?')) {
       try {
-        await axios.delete(`/api/members/${memberId}`);
+        await axios.delete(`/api/member/${memberId}`);
         setMembers(members.filter(member => member._id !== memberId));
         setSubmitMessage({ 
           type: 'success', 
