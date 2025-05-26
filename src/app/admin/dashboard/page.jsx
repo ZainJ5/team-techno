@@ -435,11 +435,11 @@ export default function AdminDashboard() {
                         <option value="Captain">Captain</option>
                         <option value="Vice Captain">Vice Captain</option>
                         <option value="Technical Lead">Technical Lead</option>
-                        <option value="Manager">Creative Director</option>
-                        <option value="Director Electrical">Operations Manager</option>
-                        <option value="Director Marketing">Community Lead</option>
-                        <option value="Director R&D">Innovation Head</option>
-                        <option value="Director Sponsorship">Quality Assurance Lead</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Director Electrical">Director Electrical</option>
+                        <option value="Director Marketing">Director Marketing</option>
+                        <option value="Director R&D">Director R&D</option>
+                        <option value="Director Sponsorship">Director Sponsorship</option>
                       </select>
                     </div>
                   )}
