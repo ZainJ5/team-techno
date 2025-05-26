@@ -43,45 +43,10 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Achievements Section */}
       <Achievements />
+
+            <TeamMemberCard/>
       
-      {/* Team Members Section */}
-      <section className="py-20 bg-zinc-900" id="team">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-red-600">Meet Our Team</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <TeamMemberCard 
-              name="Alex Chen"
-              role="Team Captain & Lead Engineer"
-              imageUrl="/team-member1.jpg"
-              specialties={["Mechanical Design", "Project Management"]}
-            />
-            <TeamMemberCard 
-              name="Sophia Rodriguez"
-              role="Software Development Lead"
-              imageUrl="/team-member2.jpg"
-              specialties={["AI Programming", "Sensor Integration"]}
-            />
-            <TeamMemberCard 
-              name="Marcus Johnson"
-              role="Electrical Systems Engineer"
-              imageUrl="/team-member3.jpg"
-              specialties={["Circuit Design", "Power Systems"]}
-            />
-          </div>
-          <div className="text-center mt-12">
-            <a 
-              href="#contact" 
-              className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-md transition-colors"
-            >
-              Join Our Team
-            </a>
-          </div>
-        </div>
-      </section>
-      
-      {/* Contact Section */}
       <section className="py-20 bg-gradient-to-r from-black to-red-900" id="contact">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -94,7 +59,6 @@ export default function Home() {
         </div>
       </section>
       
-      {/* REMOVED: Footer - already in layout */}
     </main>
   );
 }
