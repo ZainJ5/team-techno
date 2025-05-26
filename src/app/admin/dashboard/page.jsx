@@ -26,7 +26,6 @@ export default function AdminDashboard() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Edit mode state
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingMemberId, setEditingMemberId] = useState(null);
   
@@ -72,13 +71,11 @@ export default function AdminDashboard() {
     if (e.target.files?.[0]) {
       const file = e.target.files[0];
       
-      // Validate file size (5MB limit)
       if (file.size > 5 * 1024 * 1024) {
         toast.error('Image size should be less than 5MB');
         return;
       }
       
-      // Validate file type
       if (!file.type.startsWith('image/')) {
         toast.error('Please select a valid image file');
         return;
@@ -180,13 +177,11 @@ export default function AdminDashboard() {
     
     setIsSubmitting(true);
     
-    // Show loading toast
     const loadingToast = toast.loading(isEditMode ? 'Updating member...' : 'Adding member...');
     
     try {
       let imageUrl = formData.imageUrl;
       
-      // Only upload a new image if one is selected
       if (selectedImage) {
         imageUrl = await uploadImage();
         
@@ -204,11 +199,9 @@ export default function AdminDashboard() {
       };
       
       if (isEditMode) {
-        // Update existing member
         await axios.put(`/api/member/${editingMemberId}`, memberData);
         toast.success('Member updated successfully!', { id: loadingToast });
       } else {
-        // Add new member
         await axios.post('/api/member', memberData);
         toast.success('Member added successfully!', { id: loadingToast });
       }
@@ -257,7 +250,6 @@ export default function AdminDashboard() {
     setEditingMemberId(member._id);
     setIsEditMode(true);
     
-    // Scroll to form
     document.getElementById('memberForm').scrollIntoView({ behavior: 'smooth' });
     toast.success('Ready to edit member');
   };
@@ -273,7 +265,6 @@ export default function AdminDashboard() {
         <title>Admin Dashboard | Team Management</title>
       </Head>
       
-      {/* Toast Container */}
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -281,7 +272,6 @@ export default function AdminDashboard() {
         containerClassName=""
         containerStyle={{}}
         toastOptions={{
-          // Define default options
           className: '',
           duration: 4000,
           style: {
@@ -290,7 +280,6 @@ export default function AdminDashboard() {
             border: '1px solid #3f3f46',
           },
           
-          // Default options for specific types
           success: {
             duration: 3000,
             style: {
@@ -446,13 +435,11 @@ export default function AdminDashboard() {
                         <option value="Captain">Captain</option>
                         <option value="Vice Captain">Vice Captain</option>
                         <option value="Technical Lead">Technical Lead</option>
-                        <option value="Creative Director">Creative Director</option>
-                        <option value="Operations Manager">Operations Manager</option>
-                        <option value="Community Lead">Community Lead</option>
-                        <option value="Innovation Head">Innovation Head</option>
-                        <option value="Quality Assurance Lead">Quality Assurance Lead</option>
-                        <option value="Marketing Lead">Marketing Lead</option>
-                        <option value="Finance Head">Finance Head</option>
+                        <option value="Manager">Creative Director</option>
+                        <option value="Director Electrical">Operations Manager</option>
+                        <option value="Director Marketing">Community Lead</option>
+                        <option value="Director R&D">Innovation Head</option>
+                        <option value="Director Sponsorship">Quality Assurance Lead</option>
                       </select>
                     </div>
                   )}
