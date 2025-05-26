@@ -32,10 +32,10 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-black p-8 rounded-lg shadow-2xl border border-zinc-800">
+    <form onSubmit={handleSubmit} className="bg-gradient-to-br from-black/80 via-zinc-900/80 to-black/80 p-8 rounded-xl shadow-2xl border border-zinc-800/50 backdrop-blur-sm hover:border-red-500/30 transition-all duration-300">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium mb-2">
+          <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-300">
             Name
           </label>
           <input
@@ -45,13 +45,13 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full p-3 bg-zinc-900/70 border border-zinc-700/50 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500/50 transition-all duration-200 backdrop-blur-sm"
             placeholder="Your name"
           />
         </div>
         
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
+          <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-300">
             Email
           </label>
           <input
@@ -61,14 +61,14 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full p-3 bg-zinc-900/70 border border-zinc-700/50 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500/50 transition-all duration-200 backdrop-blur-sm"
             placeholder="your.email@example.com"
           />
         </div>
       </div>
       
       <div className="mb-4">
-        <label htmlFor="subject" className="block text-sm font-medium mb-2">
+        <label htmlFor="subject" className="block text-sm font-medium mb-2 text-gray-300">
           Subject
         </label>
         <input
@@ -78,13 +78,13 @@ export default function ContactForm() {
           value={formData.subject}
           onChange={handleChange}
           required
-          className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full p-3 bg-zinc-900/70 border border-zinc-700/50 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500/50 transition-all duration-200 backdrop-blur-sm"
           placeholder="How can we help you?"
         />
       </div>
       
       <div className="mb-6">
-        <label htmlFor="message" className="block text-sm font-medium mb-2">
+        <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-300">
           Message
         </label>
         <textarea
@@ -94,7 +94,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           rows={5}
-          className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full p-3 bg-zinc-900/70 border border-zinc-700/50 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500/50 transition-all duration-200 backdrop-blur-sm resize-none"
           placeholder="Your message..."
         />
       </div>
@@ -102,7 +102,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-4 px-6 bg-red-600 hover:bg-red-700 text-white font-bold rounded-md transition-colors flex justify-center items-center"
+        className="w-full py-4 px-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold rounded-md transition-all duration-300 flex justify-center items-center shadow-lg hover:shadow-red-600/30 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {submitting ? (
           <>

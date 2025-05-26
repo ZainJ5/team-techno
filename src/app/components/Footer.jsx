@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,10 +6,14 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Link href="/" className="inline-block mb-6">
-              <Image src="/team-techno-logo.jpg" alt="Team Techno Logo" width={180} height={40} />
-            </Link>
-            <p className="mb-4 text-gray-400">
+          <div className="flex items-center">
+            <div className="text-2xl md:text-3xl font-black tracking-tight">
+              <span className="text-white">TEAM</span>
+              <span className="text-red-500 ml-2">TECHNO</span>
+            </div>
+            <div className="hidden md:block ml-4 w-8 h-0.5 bg-gradient-to-r from-red-500 to-transparent"></div>
+          </div>
+            <p className="mb-4 py-2 text-gray-400">
               An award-winning robotics team pushing the boundaries of technology and innovation.
             </p>
             <div className="flex space-x-4">

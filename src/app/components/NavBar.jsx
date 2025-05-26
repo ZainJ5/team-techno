@@ -1,7 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
+  
+  const navItems = ['About', 'Expertise', 'Achievements', 'Team', 'Contact'];
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => document.getElementById(item.toLowerCase()));
+      const scrollPosition = window.scrollY + 100;
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(navItems[i].toLowerCase());
+          break;
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); 
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  const handleNavClick = (item) => {
+    setActiveSection(item.toLowerCase());
+    setIsMenuOpen(false);
+  };
   
   return (
     <nav className="relative bg-black/95 backdrop-blur-sm border-b border-zinc-800/50 sticky top-0 z-50">
@@ -18,17 +46,26 @@ export default function Navbar() {
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
-            {['About', 'Expertise', 'Achievements', 'Team', 'Contact'].map((item) => (
-              <a 
-                key={item}
-                href={`#${item.toLowerCase()}`} 
-                className="relative px-4 py-2 text-white/90 hover:text-white font-medium text-sm uppercase tracking-wider transition-all duration-300 group"
-              >
-                {item}
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></div>
-                <div className="absolute inset-0 rounded opacity-0 group-hover:opacity-100 bg-red-500/10 transition-opacity duration-300"></div>
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeSection === item.toLowerCase();
+              return (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => handleNavClick(item)}
+                  className="relative px-4 py-2 text-white/90 hover:text-white font-medium text-sm uppercase tracking-wider transition-all duration-300 group"
+                >
+                  {item}
+                  <div className={`absolute bottom-0 left-0 h-0.5 bg-red-500 transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></div>
+                  <div className="absolute inset-0 rounded opacity-0 group-hover:opacity-100 bg-red-500/10 transition-opacity duration-300"></div>
+                  {isActive && (
+                    <div className="absolute inset-0 rounded bg-red-500/5 pointer-events-none"></div>
+                  )}
+                </a>
+              );
+            })}
           </div>
           
           <button 
@@ -53,20 +90,28 @@ export default function Navbar() {
           isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="pt-4 pb-2 space-y-1">
-            {['About', 'Expertise', 'Achievements', 'Team', 'Contact'].map((item, index) => (
-              <a 
-                key={item}
-                href={`#${item.toLowerCase()}`} 
-                className="flex items-center px-4 py-3 text-white/90 hover:text-white hover:bg-zinc-800/50 font-medium text-sm uppercase tracking-wider transition-all duration-300 rounded-lg group"
-                onClick={() => setIsMenuOpen(false)}
-                style={{
-                  animationDelay: `${index * 50}ms`
-                }}
-              >
-                <div className="w-1 h-4 bg-red-500 mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                {item}
-              </a>
-            ))}
+            {navItems.map((item, index) => {
+              const isActive = activeSection === item.toLowerCase();
+              return (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => handleNavClick(item)}
+                  className="flex items-center px-4 py-3 text-white/90 hover:text-white hover:bg-zinc-800/50 font-medium text-sm uppercase tracking-wider transition-all duration-300 rounded-lg group"
+                  style={{
+                    animationDelay: `${index * 50}ms`
+                  }}
+                >
+                  <div className={`w-1 h-4 bg-red-500 mr-3 transition-opacity duration-300 ${
+                    isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  }`}></div>
+                  {item}
+                  {isActive && (
+                    <div className="absolute inset-0 rounded-lg bg-red-500/5 pointer-events-none"></div>
+                  )}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

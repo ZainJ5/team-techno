@@ -83,7 +83,6 @@ const AchievementCard = ({ achievement, index }) => {
     >
       <div className="flex-1 md:w-1/2"></div>
       
-      {/* Timeline dot with animated pulse */}
       <motion.div 
         initial="hidden"
         animate={cardInView ? "visible" : "hidden"}
@@ -92,10 +91,9 @@ const AchievementCard = ({ achievement, index }) => {
       >
         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${achievement.color} shadow-lg 
           flex items-center justify-center text-white text-xl
-          border-4 border-black relative`}>
+          border-4 border-[#060608] relative`}>
           {achievement.icon}
           
-          {/* Animated pulse effect */}
           <span className="absolute top-0 left-0 w-full h-full rounded-full 
             bg-gradient-to-br animate-ping opacity-20 duration-1000"></span>
         </div>
@@ -107,8 +105,8 @@ const AchievementCard = ({ achievement, index }) => {
         variants={cardVariants}
         className="flex-1 md:w-1/2 p-4 md:p-8"
       >
-        <div className={`bg-gradient-to-b from-zinc-900 to-zinc-950 rounded-xl shadow-2xl 
-          p-6 md:p-8 border border-zinc-800 transform transition-all duration-500 
+        <div className={`bg-gradient-to-b from-zinc-900/80 to-zinc-950/80 rounded-xl shadow-2xl 
+          p-6 md:p-8 border border-zinc-800/50 transform transition-all duration-500 
           backdrop-blur-sm hover:border-red-500 group
           ${isEven ? 'md:ml-10' : 'md:mr-10'}`}
           >
@@ -116,7 +114,6 @@ const AchievementCard = ({ achievement, index }) => {
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b 
             from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 
             transition-opacity duration-700 rounded-xl pointer-events-none
-            'md:ml-10'  md:ml-10
             "></div>
           
           <div className="flex items-center justify-between mb-6">
@@ -155,16 +152,29 @@ export default function Achievements() {
   }, [isInView, controls]);
 
   return (
-    <section className="py-20 bg-black relative overflow-hidden" id="achievements">
-      {/* Background effects */}
-      <div className="absolute top-0 left-0 w-full h-full">
+    <section className="py-20 bg-[#060608] relative overflow-hidden" id="achievements">
+      {/* Background elements for visual continuity */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 right-0 w-2/5 h-2/5 bg-red-800/6 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-rose-900/6 blur-[150px] rounded-full"></div>
+        <div className="absolute top-2/3 right-1/3 w-1/4 h-1/4 bg-blue-600/2 blur-[120px] rounded-full"></div>
+        
+        <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.015]"></div>
+        
+        {/* Gradient overlay to ensure smooth transition from Features */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#060608] via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600/1.5 via-transparent to-rose-600/1.5"></div>
+      </div>
+
+      {/* Additional animated background elements */}
+      <div className="absolute top-0 left-0 w-full h-full z-0">
         <div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full 
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/8 rounded-full 
                     filter blur-3xl animate-pulse"
           style={{ animationDuration: '8s' }}
         ></div>
         <div
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600/10 rounded-full 
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600/8 rounded-full 
                     filter blur-3xl animate-pulse"
           style={{ animationDuration: '12s' }}
         ></div>
@@ -185,7 +195,6 @@ export default function Achievements() {
         </motion.div>
         
         <div className="relative" ref={containerRef}>
-          {/* Vertical timeline line with animation */}
           <motion.div 
             initial={{ height: 0 }}
             animate={isInView ? { height: "100%" } : { height: 0 }}

@@ -99,8 +99,8 @@ const ScrollableContainer = ({ children, className = '', priority = false }) => 
 
   return (
     <div className="relative">
-      <div className={`absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-neutral-950 to-transparent z-10 ${priority ? 'mix-blend-soft-light' : ''}`}></div>
-      <div className={`absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-neutral-950 to-transparent z-10 ${priority ? 'mix-blend-soft-light' : ''}`}></div>
+      <div className={`absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#060608] to-transparent z-10 ${priority ? 'mix-blend-soft-light' : ''}`}></div>
+      <div className={`absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#060608] to-transparent z-10 ${priority ? 'mix-blend-soft-light' : ''}`}></div>
 
       <button
         onClick={scrollLeft}
@@ -212,87 +212,110 @@ export default function TeamDisplay() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
+    <div id='team' className="min-h-screen bg-[#060608]  text-white">
       <ScrollbarHideStyle />
 
-      <div className="relative overflow-hidden py-24 md:py-32 bg-gradient-to-b from-neutral-900 to-neutral-950">
-        <div className="absolute inset-0 overflow-hidden opacity-50">
-          <div className="absolute h-[30rem] w-[30rem] md:h-[36rem] md:w-[36rem] rounded-full bg-red-600/20 blur-3xl -top-24 -left-24 animate-pulse"></div>
-          <div className="absolute h-[30rem] w-[30rem] md:h-[36rem] md:w-[36rem] rounded-full bg-red-700/15 blur-3xl -bottom-20 -right-20 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+      <div className="relative overflow-hidden py-16 md:py-20 bg-[#060608]">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-2/5 h-2/5 bg-red-800/5 blur-[180px] rounded-full"></div>
+          <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-rose-900/5 blur-[150px] rounded-full"></div>
+          <div className="absolute top-1/3 right-1/4 w-1/4 h-1/4 bg-blue-600/1.5 blur-[120px] rounded-full"></div>
+          
+          <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.01]"></div>
+          
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060608] via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-red-600/1 via-transparent to-rose-600/1"></div>
         </div>
-        <div className="absolute inset-0 bg-black/20"></div>
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="absolute inset-0 overflow-hidden opacity-30 z-0">
+          <div className="absolute h-[20rem] w-[20rem] md:h-[24rem] md:w-[24rem] rounded-full bg-red-600/15 blur-3xl -top-16 -left-16 animate-pulse"></div>
+          <div className="absolute h-[20rem] w-[20rem] md:h-[24rem] md:w-[24rem] rounded-full bg-red-700/10 blur-3xl -bottom-12 -right-12 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+        
+        <div className="absolute inset-0 bg-black/10 z-0"></div>
+
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-8 z-10">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white mb-6">
-              Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-yellow-500">Team</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4">
+              Meet Our <span className="text-red-600">Team</span>
             </h1>
-            <p className="text-lg md:text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
-              A passionate group of innovators, creators, and leaders dedicated to pushing boundaries and building the future, together.
+            
+            <p className="text-lg md:text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              A passionate group of innovators, creators, and leaders dedicated to pushing boundaries and building the future together.
             </p>
+
+            <div className="flex justify-center">
+              <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="py-16 md:py-24">
-        <div className="text-center mb-16 md:mb-20">
-          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-5 tracking-tight">
-            Executive <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Committee</span>
-          </h2>
-          <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10 px-4 leading-relaxed">
-            The strategic minds and driving force guiding our mission and initiatives.
-          </p>
-          <div className="flex justify-center">
-            <div className="w-28 h-1.5 bg-gradient-to-r from-red-500 to-red-700 rounded-full"></div>
-          </div>
+      <div className="bg-[#060608] relative">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.008]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-600/0.5 to-transparent"></div>
         </div>
 
-        {error && <div className="text-center text-red-500 py-8 text-lg">{error}</div>}
-        {loading ? (
-          <ScrollableContainer priority>
-            {[...Array(5)].map((_, i) => <CardSkeleton key={i} isEC={true} />)}
-          </ScrollableContainer>
-        ) : ecMembers.length > 0 ? (
-          <ScrollableContainer priority>
-            {ecMembers.map(member => (
-              <ECMemberCard
-                key={member._id || member.name}
-                member={member}
-                isLeadership={isLeadershipRole(member.ecTitle)}
-              />
-            ))}
-          </ScrollableContainer>
-        ) : (
-          !error && <div className="text-center text-neutral-500 py-8 text-lg">No executive committee members found.</div>
-        )}
-
-        <div className="mt-24 md:mt-32">
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-4xl md:text-5xl font-semibold text-white mb-5 tracking-tight">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Dedicated Members</span>
-            </h2>
-            <p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10 px-4 leading-relaxed">
-              The talented individuals whose expertise and collaboration bring our projects to life.
-            </p>
-            <div className="flex justify-center">
-              <div className="w-28 h-1.5 bg-gradient-to-r from-red-500 to-red-700 rounded-full"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          
+          {/* Executive Committee Section */}
+          <div className="mb-16 md:mb-20">
+            <div className="text-center mb-10 md:mb-12">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 tracking-tight">
+                Executive <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Committee</span>
+              </h2>
+              <p className="text-base md:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+                The strategic minds and driving force guiding our mission and initiatives.
+              </p>
             </div>
+
+            {error && <div className="text-center text-red-500 py-8 text-lg">{error}</div>}
+            {loading ? (
+              <ScrollableContainer priority>
+                {[...Array(5)].map((_, i) => <CardSkeleton key={i} isEC={true} />)}
+              </ScrollableContainer>
+            ) : ecMembers.length > 0 ? (
+              <ScrollableContainer priority>
+                {ecMembers.map(member => (
+                  <ECMemberCard
+                    key={member._id || member.name}
+                    member={member}
+                    isLeadership={isLeadershipRole(member.ecTitle)}
+                  />
+                ))}
+              </ScrollableContainer>
+            ) : (
+              !error && <div className="text-center text-neutral-500 py-8 text-lg">No executive committee members found.</div>
+            )}
           </div>
 
-          {error && !loading && teamMembers.length === 0 && <div className="text-center text-red-500 py-8 text-lg">{error}</div>}
-          {loading ? (
-            <ScrollableContainer>
-              {[...Array(7)].map((_, i) => <CardSkeleton key={i} />)}
-            </ScrollableContainer>
-          ) : teamMembers.length > 0 ? (
-            <ScrollableContainer>
-              {teamMembers.map(member => (
-                <TeamMemberCard key={member._id || member.name} member={member} />
-              ))}
-            </ScrollableContainer>
-          ) : (
-            !error && <div className="text-center text-neutral-500 py-8 text-lg">No team members found.</div>
-          )}
+          {/* Team Members Section */}
+          <div>
+            <div className="text-center mb-10 md:mb-12">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 tracking-tight">
+                Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Dedicated Members</span>
+              </h2>
+              <p className="text-base md:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+                The talented individuals whose expertise and collaboration bring our projects to life.
+              </p>
+            </div>
+
+            {error && !loading && teamMembers.length === 0 && <div className="text-center text-red-500 py-8 text-lg">{error}</div>}
+            {loading ? (
+              <ScrollableContainer>
+                {[...Array(7)].map((_, i) => <CardSkeleton key={i} />)}
+              </ScrollableContainer>
+            ) : teamMembers.length > 0 ? (
+              <ScrollableContainer>
+                {teamMembers.map(member => (
+                  <TeamMemberCard key={member._id || member.name} member={member} />
+                ))}
+              </ScrollableContainer>
+            ) : (
+              !error && <div className="text-center text-neutral-500 py-8 text-lg">No team members found.</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

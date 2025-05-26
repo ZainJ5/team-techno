@@ -14,14 +14,14 @@ export default function AboutUs() {
   return (
     <section className={`${montserrat.variable} py-16 sm:py-20 lg:py-24 bg-[#060608] relative overflow-hidden`} id="about">
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-2/5 h-2/5 bg-red-800/10 blur-[180px] rounded-full"></div>
-        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-rose-900/10 blur-[150px] rounded-full"></div>
-        <div className="absolute top-2/3 right-1/4 w-1/4 h-1/4 bg-blue-600/3 blur-[120px] rounded-full"></div>
+        <div className="absolute top-0 right-0 w-2/5 h-2/5 bg-red-800/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-rose-900/10 blur-[150px] rounded-full"></div>
+        <div className="absolute top-1/3 right-1/4 w-1/4 h-1/4 bg-blue-600/3 blur-[120px] rounded-full"></div>
         
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.02]"></div>
         
+        <div className="absolute inset-0 bg-gradient-to-b from-[#060608] via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-red-600/3 via-transparent to-rose-600/3"></div>
-        <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-transparent to-[#060608]/20"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
