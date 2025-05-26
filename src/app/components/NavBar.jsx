@@ -3,38 +3,46 @@ import { useState, useEffect } from 'react';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
-  
-  const navItems = ['Home','About', 'Expertise', 'Achievements', 'Team', 'Contact'];
-  
+
+  const navItems = [
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Expertise', id: 'expertise' },
+    { name: 'Achievements', id: 'achievements' },
+    { name: 'Team', id: 'team' },
+    { name: 'Team Gallery', id: 'gallery' },
+    { name: 'Contact', id: 'contact' },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.toLowerCase()));
+      const sections = navItems.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 100;
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].toLowerCase());
+          setActiveSection(navItems[i].id);
           break;
         }
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); 
-    
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  const handleNavClick = (item) => {
-    setActiveSection(item.toLowerCase());
+
+  const handleNavClick = (id) => {
+    setActiveSection(id);
     setIsMenuOpen(false);
   };
-  
+
   return (
     <nav className="relative bg-black/95 backdrop-blur-sm border-b border-zinc-800/50 sticky top-0 z-50">
       <div className="absolute inset-0 bg-gradient-to-r from-black via-zinc-900/50 to-black opacity-50"></div>
-      
+
       <div className="relative container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
@@ -44,18 +52,18 @@ export default function Navbar() {
             </div>
             <div className="hidden md:block ml-4 w-8 h-0.5 bg-gradient-to-r from-red-500 to-transparent"></div>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
-              const isActive = activeSection === item.toLowerCase();
+              const isActive = activeSection === item.id;
               return (
-                <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavClick(item)}
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => handleNavClick(item.id)}
                   className="relative px-4 py-2 text-white/90 hover:text-white font-medium text-sm uppercase tracking-wider transition-all duration-300 group"
                 >
-                  {item}
+                  {item.name}
                   <div className={`absolute bottom-0 left-0 h-0.5 bg-red-500 transition-all duration-300 ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}></div>
@@ -67,9 +75,9 @@ export default function Navbar() {
               );
             })}
           </div>
-          
-          <button 
-            className="md:hidden relative w-10 h-10 flex items-center justify-center text-white hover:text-red-500 transition-colors duration-300" 
+
+          <button
+            className="md:hidden relative w-10 h-10 flex items-center justify-center text-white hover:text-red-500 transition-colors duration-300"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <div className="relative w-6 h-6">
@@ -85,18 +93,18 @@ export default function Navbar() {
             </div>
           </button>
         </div>
-        
+
         <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="pt-4 pb-2 space-y-1">
             {navItems.map((item, index) => {
-              const isActive = activeSection === item.toLowerCase();
+              const isActive = activeSection === item.id;
               return (
-                <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavClick(item)}
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => handleNavClick(item.id)}
                   className="flex items-center px-4 py-3 text-white/90 hover:text-white hover:bg-zinc-800/50 font-medium text-sm uppercase tracking-wider transition-all duration-300 rounded-lg group"
                   style={{
                     animationDelay: `${index * 50}ms`
@@ -105,7 +113,7 @@ export default function Navbar() {
                   <div className={`w-1 h-4 bg-red-500 mr-3 transition-opacity duration-300 ${
                     isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`}></div>
-                  {item}
+                  {item.name}
                   {isActive && (
                     <div className="absolute inset-0 rounded-lg bg-red-500/5 pointer-events-none"></div>
                   )}
@@ -115,7 +123,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      
+
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
     </nav>
   );

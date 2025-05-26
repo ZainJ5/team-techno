@@ -43,7 +43,7 @@ export default function TeamPhotoGallery() {
     
     return (
       <>
-        <div 
+        <div id='gallery'
           className="fixed inset-0 bg-black opacity-95" 
           style={{ position: 'fixed', zIndex: 999999 }}
           onClick={closeModal}
