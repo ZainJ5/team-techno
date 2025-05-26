@@ -129,6 +129,7 @@ export default function Hero({ subtitle }) {
 
   return (
     <section 
+    id='home'
       ref={containerRef}
       className={`${montserrat.variable} min-h-screen relative overflow-hidden bg-[#060608]`}
     >

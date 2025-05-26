@@ -153,7 +153,6 @@ export default function Achievements() {
 
   return (
     <section className="py-20 bg-[#060608] relative overflow-hidden" id="achievements">
-      {/* Background elements for visual continuity */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-2/5 h-2/5 bg-red-800/6 blur-[180px] rounded-full"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-rose-900/6 blur-[150px] rounded-full"></div>
@@ -161,12 +160,10 @@ export default function Achievements() {
         
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.015]"></div>
         
-        {/* Gradient overlay to ensure smooth transition from Features */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#060608] via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-red-600/1.5 via-transparent to-rose-600/1.5"></div>
       </div>
 
-      {/* Additional animated background elements */}
       <div className="absolute top-0 left-0 w-full h-full z-0">
         <div 
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/8 rounded-full 

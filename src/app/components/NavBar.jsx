@@ -4,7 +4,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   
-  const navItems = ['About', 'Expertise', 'Achievements', 'Team', 'Contact'];
+  const navItems = ['Home','About', 'Expertise', 'Achievements', 'Team', 'Contact'];
   
   useEffect(() => {
     const handleScroll = () => {
