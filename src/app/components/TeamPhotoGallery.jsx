@@ -1,10 +1,17 @@
 "use client"
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function TeamPhotoGallery() {
   const [activePhoto, setActivePhoto] = useState(null);
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
   
   const teamPhotos = [
     { id: 1, image: "/team-photos/1.jpg" }, 
@@ -22,11 +29,71 @@ export default function TeamPhotoGallery() {
   const openModal = (id) => {
     setActivePhoto(id);
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   };
 
   const closeModal = () => {
     setActivePhoto(null);
     document.body.style.overflow = 'auto';
+    document.body.classList.remove('modal-open');
+  };
+
+  const Modal = () => {
+    if (!activePhoto) return null;
+    
+    return (
+      <>
+        <div 
+          className="fixed inset-0 bg-black opacity-95" 
+          style={{ position: 'fixed', zIndex: 999999 }}
+          onClick={closeModal}
+        ></div>
+        
+        <div 
+          className="fixed inset-0 flex items-center justify-center"
+          style={{ position: 'fixed', zIndex: 9999999 }}
+          onClick={closeModal}
+        >
+          <div 
+            className="relative w-full max-w-5xl max-h-[90vh] bg-gradient-to-b from-gray-900 to-black rounded-md border border-red-500/30 shadow-2xl shadow-red-500/30 overflow-hidden animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="absolute top-3 right-3 flex items-center justify-center w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 text-white transition-all duration-300 shadow-lg z-10 group"
+              onClick={closeModal}
+              aria-label="Close"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 group-hover:scale-110 transition-transform" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            
+            <div className="w-full">
+              <div className="relative w-full">
+                <Image
+                  src={teamPhotos.find(p => p.id === activePhoto).image}
+                  alt="Team photo"
+                  width={1200}
+                  height={800}
+                  className="object-contain w-full h-full"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -69,62 +136,12 @@ export default function TeamPhotoGallery() {
             </div>
           ))}
         </div>
-
-        {activePhoto && (
-          <>
-            {/* Backdrop with highest z-index */}
-            <div 
-              className="fixed inset-0 bg-black/95 z-[9999]" 
-              onClick={closeModal}
-              style={{ position: 'fixed' }}
-            ></div>
-            
-            {/* Modal content */}
-            <div 
-              className="fixed inset-0 z-[10000] flex items-center justify-center"
-              style={{ position: 'fixed' }}
-              onClick={closeModal}
-            >
-              <div 
-                className="relative w-full max-w-5xl max-h-[90vh] bg-gradient-to-b from-gray-900 to-black rounded-md border border-red-500/30 shadow-2xl shadow-red-500/30 overflow-hidden animate-scaleIn"
-                onClick={(e) => e.stopPropagation()}
-                style={{ position: 'relative' }}
-              >
-                <div 
-                  className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-r from-gray-900 to-black flex justify-end items-center pr-2"
-                  style={{ position: 'absolute', zIndex: 10 }}
-                >
-                  <button 
-                    className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white transition-all duration-300"
-                    onClick={closeModal}
-                    aria-label="Close"
-                    style={{ position: 'relative' }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                
-                <div 
-                  className="pt-10"
-                  style={{ position: 'relative' }}
-                >
-                  <div className="relative w-full">
-                    <Image
-                      src={teamPhotos.find(p => p.id === activePhoto).image}
-                      alt="Team photo"
-                      width={1200}
-                      height={800}
-                      className="object-contain w-full h-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
       </div>
+
+      {mounted && createPortal(
+        <Modal />,
+        document.body
+      )}
 
       <style jsx global>{`
         @keyframes fadeIn {
@@ -145,10 +162,16 @@ export default function TeamPhotoGallery() {
           animation: scaleIn 0.2s ease-out;
         }
         
-        /* Ensure modal is above ALL other elements */
-        #__next {
-          position: relative;
-          z-index: 1;
+        /* Force the navbar below modal when modal is open */
+        body.modal-open header,
+        body.modal-open nav,
+        body.modal-open [class*="header"],
+        body.modal-open [class*="navbar"],
+        body.modal-open [class*="nav-"],
+        body.modal-open [id*="header"],
+        body.modal-open [id*="navbar"],
+        body.modal-open [id*="nav-"] {
+          z-index: 1 !important;
         }
       `}</style>
     </section>
