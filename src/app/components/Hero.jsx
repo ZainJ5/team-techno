@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Montserrat } from 'next/font/google';
 
-// Font setup
 const montserrat = Montserrat({ 
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -34,22 +33,21 @@ export default function Hero({ subtitle }) {
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      // Create particles with improved tech visuals
       const particles = [];
-      const particleCount = window.innerWidth < 768 ? 60 : 120; // Reduced particles on mobile
+      const particleCount = window.innerWidth < 768 ? 60 : 120; 
       
       const colorPalette = [
-        {r: 220, g: 38, b: 38, a: 0.15}, // Red-500 with lower opacity
-        {r: 239, g: 68, b: 68, a: 0.12}, // Red-400 with lower opacity
-        {r: 225, g: 29, b: 72, a: 0.15}, // Rose-600 with lower opacity
-        {r: 244, g: 63, b: 94, a: 0.12}, // Rose-500 with lower opacity
-        {r: 248, g: 113, b: 113, a: 0.08}, // Red-300 with lower opacity
-        {r: 20, g: 184, b: 231, a: 0.08}, // Blue tech accent with low opacity
+        {r: 220, g: 38, b: 38, a: 0.15}, 
+        {r: 239, g: 68, b: 68, a: 0.12}, 
+        {r: 225, g: 29, b: 72, a: 0.15}, 
+        {r: 244, g: 63, b: 94, a: 0.12}, 
+        {r: 248, g: 113, b: 113, a: 0.08}, 
+        {r: 20, g: 184, b: 231, a: 0.08},
       ];
 
       for (let i = 0; i < particleCount; i++) {
         const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-        const size = Math.random() * 2 + 0.5; // Smaller particles
+        const size = Math.random() * 2 + 0.5; 
         
         particles.push({
           x: Math.random() * canvas.width,
@@ -57,8 +55,8 @@ export default function Hero({ subtitle }) {
           radius: size,
           originalRadius: size,
           color: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
-          speedX: Math.random() * 0.5 - 0.25, // Slightly faster movement
-          speedY: Math.random() * 0.5 - 0.25, // Slightly faster movement
+          speedX: Math.random() * 0.5 - 0.25, 
+          speedY: Math.random() * 0.5 - 0.25,
           r: color.r,
           g: color.g,
           b: color.b,
@@ -76,30 +74,24 @@ export default function Hero({ subtitle }) {
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Update and draw each particle
         particles.forEach(particle => {
-          // Update position
           particle.x += particle.speedX;
           particle.y += particle.speedY;
           
-          // Wrap around screen edges
           if (particle.x + particle.radius < 0) particle.x = canvas.width + particle.radius;
           if (particle.x - particle.radius > canvas.width) particle.x = -particle.radius;
           if (particle.y + particle.radius < 0) particle.y = canvas.height + particle.radius;
           if (particle.y - particle.radius > canvas.height) particle.y = -particle.radius;
 
-          // Subtle pulsing effect
           particle.pulse += particle.pulseSpeed;
           particle.radius = particle.originalRadius + Math.sin(particle.pulse) * 0.5;
 
-          // Draw particle
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
           ctx.fillStyle = particle.color;
           ctx.fill();
         });
 
-        // Draw connections
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const p1 = particles[i];
@@ -108,8 +100,7 @@ export default function Hero({ subtitle }) {
             const dy = p1.y - p2.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            // Maximum distance for connections
-            const maxDistance = window.innerWidth < 768 ? 100 : 150; // Shorter connections on mobile
+            const maxDistance = window.innerWidth < 768 ? 100 : 150; 
             
             if (distance < maxDistance) {
               let opacity = 0.08 * (1 - distance / maxDistance);
@@ -146,20 +137,17 @@ export default function Hero({ subtitle }) {
         className="absolute inset-0 w-full h-full z-0"
       />
       
-      {/* Enhanced gradient overlays */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-2/5 h-2/5 bg-red-800/15 blur-[180px] rounded-full"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-rose-900/15 blur-[150px] rounded-full"></div>
         <div className="absolute top-1/3 left-1/4 w-1/4 h-1/4 bg-blue-600/5 blur-[120px] rounded-full"></div>
         
-        {/* Tech grid pattern */}
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-repeat opacity-[0.03] z-0"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-10 relative pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 md:pb-16">
         <div className="flex flex-col-reverse items-center text-center space-y-8 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 lg:gap-16 md:items-center md:text-left">
           
-          {/* Content - First on mobile, left on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
@@ -185,7 +173,6 @@ export default function Hero({ subtitle }) {
               {subtitle || "We push the boundaries of what's possible in robotics and technology. Our team combines precision engineering with cutting-edge artificial intelligence to solve tomorrow's challenges today."}
             </p>
             
-            {/* Stats Section */}
             <div className="flex flex-wrap justify-center md:justify-start gap-3 sm:gap-4 lg:gap-5 mb-6 sm:mb-8 lg:mb-10">
               {[
                 { value: "15+", label: "Competitions" },
@@ -207,7 +194,6 @@ export default function Hero({ subtitle }) {
               ))}
             </div>
             
-            {/* Buttons - Enhanced responsive design */}
             <div className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-3 sm:gap-4 max-w-md mx-auto md:mx-0">
             <motion.div 
               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 max-w-md mx-auto lg:mx-0"
@@ -236,7 +222,6 @@ export default function Hero({ subtitle }) {
             </div>
           </motion.div>
           
-          {/* Hero Image - First on mobile (above text), right on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
@@ -244,21 +229,17 @@ export default function Hero({ subtitle }) {
             className="relative flex justify-center order-1 md:order-2 w-full mb-8 md:mb-0"
           >
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg aspect-square">
-              {/* Enhanced decorative elements */}
               <div className="absolute -inset-4 sm:-inset-6 md:-inset-8 rounded-full bg-gradient-to-br from-red-600/10 via-rose-500/10 to-purple-500/5 blur-xl sm:blur-2xl animate-pulse-slow"></div>
               
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-600/15 to-rose-600/10 blur-md"></div>
               
-              {/* Tech circuit pattern behind image */}
               <div className="absolute inset-0 rounded-full overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/circuit-pattern.png')] bg-cover opacity-5"></div>
               </div>
               
-              {/* Glowing rings - responsive sizing */}
               <div className="absolute inset-2 sm:inset-4 rounded-full border-4 sm:border-6 md:border-8 border-red-500/5 animate-spin-slow"></div>
               <div className="absolute inset-6 sm:inset-8 md:inset-10 rounded-full border-2 sm:border-3 md:border-4 border-red-500/10 animate-spin-slow-reverse"></div>
               
-              {/* Hero image - properly sized and responsive */}
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -295,7 +276,6 @@ export default function Hero({ subtitle }) {
                 />
               </motion.div>
               
-              {/* Floating tech elements - responsive positioning */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
