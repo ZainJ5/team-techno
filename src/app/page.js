@@ -6,6 +6,7 @@ import ContactForm from './components/ContactForm';
 import Achievements from './components/Achievements';
 import Image from 'next/image';
 import AboutUs from './components/AboutUs';
+import TeamPhotoGallery from './components/TeamPhotoGallery';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -54,8 +55,8 @@ export default function Home() {
       </section>
       
       <Achievements />
-
       <TeamMemberCard/>
+<TeamPhotoGallery/>
       
       <section className="py-20 bg-[#060608] relative overflow-hidden" id="contact">
         <div className="absolute inset-0 z-0">
